@@ -1,9 +1,33 @@
-<html>
-    <head>
-        <title>Mikkelhm - Food</title>
-    </head>
-    <body>
-        <h1>Mikkelhm - Food</h1>
-        <div>mmmm - Im hungry!.. much</div>
-    </body>
+<html lang="da-Dk">
+
+<head>
+    <title>Mikkelhm - Food</title>
+    <script defer src="js/main.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body x-data="recipieData()" x-init="loadRecipies()">
+    <h1>Mikkelhm - Food</h1>
+    <div>mmmm - Im hungry!.. much</div>
+    <ul>
+        <template x-for="recipie in recipies">
+            <li x-text="recipie.name" @click="currentRecipie = recipie"></li>
+        </template>
+    </ul>
+    <template x-if="currentRecipie">
+    <div>
+        <h1 x-text="currentRecipie.name"></h1>
+        <ul>
+            <template x-for="categroy in currentRecipie.categroy">
+                <li x-text="categroy"></li>
+            </template>
+        </ul>
+        <p><small x-html="currentRecipie.introduction"></small></p>
+        <p>Work time: <small x-text="currentRecipie.workTime"></small></p>
+        <p>Total time: <small x-text="currentRecipie.totalTime"></small></p>
+    </div>
+</template>
+</body>
+
 </html>
