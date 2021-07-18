@@ -24,8 +24,26 @@
             </template>
         </ul>
         <p><small x-html="currentRecipie.introduction"></small></p>
+        <p>Persons: <small x-text="currentRecipie.persons"></small></p>
         <p>Work time: <small x-text="currentRecipie.workTime"></small></p>
         <p>Total time: <small x-text="currentRecipie.totalTime"></small></p>
+        <ul>
+            <template x-for="ingredient in currentRecipie.ingredients">
+                <li><span x-text="ingredient.amount"></span> <span x-text="ingredient.amountSpec"></span> <span x-text="ingredient.ingredient.name"></span></li>
+            </template>
+        </ul>
+        <ul>
+            <template x-for="step in currentRecipie.steps">
+                <li x-text="step.step"></li>
+            </template>
+        </ul>
+        <ul>
+            <template x-for="ref in currentRecipie.reference">
+                <li>
+                    <a :href="ref.url" :target="ref.target" x-text="ref.name"></a>
+                </li>
+            </template>
+        </ul>
     </div>
 </template>
 </body>
