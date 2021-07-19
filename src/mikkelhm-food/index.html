@@ -1,51 +1,77 @@
 <html lang="da-Dk">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mikkelhm - Food</title>
     <script defer src="js/main.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
     <link href="css/style.css" rel="stylesheet" />
 </head>
 
 <body x-data="recipieData()" x-init="loadRecipies()">
-    <h1>Mikkelhm - Food</h1>
-    <div>mmmm - Im hungry!.. much</div>
-    <ul>
-        <template x-for="recipie in recipies">
-            <li x-text="recipie.name" @click="currentRecipie = recipie"></li>
-        </template>
-    </ul>
-    <template x-if="currentRecipie">
-    <div>
-        <h1 x-text="currentRecipie.name"></h1>
+    <header class="sticky">
+        <a href="#" class="logo">Mikkelhm - Food</a>
+    </header>
+    <div class="container">
         <ul>
-            <template x-for="categroy in currentRecipie.categroy">
-                <li x-text="categroy"></li>
-            </template>
-        </ul>
-        <p><small x-html="currentRecipie.introduction"></small></p>
-        <p>Persons: <small x-text="currentRecipie.persons"></small></p>
-        <p>Work time: <small x-text="currentRecipie.workTime"></small></p>
-        <p>Total time: <small x-text="currentRecipie.totalTime"></small></p>
-        <ul>
-            <template x-for="ingredient in currentRecipie.ingredients">
-                <li><span x-text="ingredient.amount"></span> <span x-text="ingredient.amountSpec"></span> <span x-text="ingredient.ingredient.name"></span></li>
-            </template>
-        </ul>
-        <ul>
-            <template x-for="step in currentRecipie.steps">
-                <li x-text="step.step"></li>
-            </template>
-        </ul>
-        <ul>
-            <template x-for="ref in currentRecipie.reference">
+            <template x-for="recipie in recipies">
                 <li>
-                    <a :href="ref.url" :target="ref.target" x-text="ref.name"></a>
+                    <a href="#" x-text="recipie.name" @click="currentRecipie = recipie"></a>
                 </li>
             </template>
         </ul>
     </div>
-</template>
+    <template x-if="currentRecipie">
+        <div class="container">
+            <div class="row">
+                <h1 x-text="currentRecipie.name"></h1>
+            </div>
+            <div class="row">
+                <small x-html="currentRecipie.introduction"></small>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Persons: <small x-text="currentRecipie.persons"></small></div>
+                <div class="col-sm-4">Work time: <small x-text="currentRecipie.workTime"></small></div>
+                <div class="col-sm-4">Total time: <small x-text="currentRecipie.totalTime"></small></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <h2>Ingredienser</h2>
+                    <ul>
+                        <template x-for="ingredient in currentRecipie.ingredients">
+                            <li><span x-text="ingredient.amount"></span> <span x-text="ingredient.amountSpec"></span>
+                                <span x-text="ingredient.ingredient.name"></span></li>
+                        </template>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6">
+                    <h2>Fremgangsmåde</h2>
+                    <ul>
+                        <template x-for="step in currentRecipie.steps">
+                            <li x-text="step.step"></li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+            <ul>
+                <template x-for="categroy in currentRecipie.categroy">
+                    <li x-text="categroy"></li>
+                </template>
+            </ul>
+            <ul>
+                <template x-for="ref in currentRecipie.reference">
+                    <li>
+                        <a :href="ref.url" :target="ref.target" x-text="ref.name"></a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </template>
+    <footer>
+        <p>Enjoy - have fun, and eat responsible - <a href="https://github.com/mikkelhm/mikkelhm-food"
+                target="_blank">Code @ Github</a></p>
+    </footer>
 </body>
 
 </html>
