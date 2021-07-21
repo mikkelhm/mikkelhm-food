@@ -32,12 +32,18 @@
             <div class="row">
                 <h1 x-text="$store.recipieData.currentRecipie.name"></h1>
             </div>
+            <template x-for="photo in $store.recipieData.currentRecipie.photos">
+                <div class="row">
+                    <img :src="photo._url" />
+                </div>
+            </template>
             <div class="row">
                 <small x-html="$store.recipieData.currentRecipie.introduction"></small>
             </div>
             <div class="row">
                 <div class="col-sm-4">Personer: <span x-text="$store.recipieData.currentRecipie.persons"></span></div>
-                <div class="col-sm-4">Arbejdstid: <span x-text="$store.recipieData.currentRecipie.workTime"></span></div>
+                <div class="col-sm-4">Arbejdstid: <span x-text="$store.recipieData.currentRecipie.workTime"></span>
+                </div>
                 <div class="col-sm-4">Total tid: <span x-text="$store.recipieData.currentRecipie.totalTime"></span>
                 </div>
             </div>
