@@ -5,41 +5,42 @@
     <title>Mikkelhm - Food</title>
     <script defer src="js/main.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
     <link href="css/style.css" rel="stylesheet" />
 </head>
 
-<body x-data="recipieData()" x-init="loadRecipies()">
+<body x-data>
     <header class="sticky">
         <a href="#" class="logo">Mikkelhm - Food</a>
     </header>
     <div class="container">
         <ul>
-            <template x-for="recipie in recipies">
+            <template x-for="recipie in $store.recipieData.recipies">
                 <li>
-                    <a href="#" x-text="recipie.name" @click="currentRecipie = recipie"></a>
+                    <a x-bind:href="'#' + recipie._url" x-text="recipie.name"></a>
                 </li>
             </template>
         </ul>
     </div>
-    <template x-if="currentRecipie">
+    <template x-if="$store.recipieData.currentRecipie">
         <div class="container">
             <div class="row">
-                <h1 x-text="currentRecipie.name"></h1>
+                <h1 x-text="$store.recipieData.currentRecipie.name"></h1>
             </div>
             <div class="row">
-                <small x-html="currentRecipie.introduction"></small>
+                <small x-html="$store.recipieData.currentRecipie.introduction"></small>
             </div>
             <div class="row">
-                <div class="col-sm-4">Persons: <small x-text="currentRecipie.persons"></small></div>
-                <div class="col-sm-4">Work time: <small x-text="currentRecipie.workTime"></small></div>
-                <div class="col-sm-4">Total time: <small x-text="currentRecipie.totalTime"></small></div>
+                <div class="col-sm-4">Persons: <small x-text="$store.recipieData.currentRecipie.persons"></small></div>
+                <div class="col-sm-4">Work time: <small x-text="$store.recipieData.currentRecipie.workTime"></small></div>
+                <div class="col-sm-4">Total time: <small x-text="$store.recipieData.currentRecipie.totalTime"></small></div>
             </div>
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <h2>Ingredienser</h2>
                     <ul>
-                        <template x-for="ingredient in currentRecipie.ingredients">
+                        <template x-for="ingredient in $store.recipieData.currentRecipie.ingredients">
                             <li><span x-text="ingredient.amount"></span> <span x-text="ingredient.amountSpec"></span>
                                 <span x-text="ingredient.ingredient.name"></span></li>
                         </template>
@@ -48,19 +49,19 @@
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <h2>Fremgangsmåde</h2>
                     <ul>
-                        <template x-for="step in currentRecipie.steps">
+                        <template x-for="step in $store.recipieData.currentRecipie.steps">
                             <li x-text="step.step"></li>
                         </template>
                     </ul>
                 </div>
             </div>
             <ul>
-                <template x-for="categroy in currentRecipie.categroy">
+                <template x-for="categroy in $store.recipieData.currentRecipie.categroy">
                     <li x-text="categroy"></li>
                 </template>
             </ul>
             <ul>
-                <template x-for="ref in currentRecipie.reference">
+                <template x-for="ref in $store.recipieData.currentRecipie.reference">
                     <li>
                         <a :href="ref.url" :target="ref.target" x-text="ref.name"></a>
                     </li>
