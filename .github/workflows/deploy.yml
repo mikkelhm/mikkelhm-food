@@ -25,6 +25,12 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
+      
+      # TODO
+      # Setup terraform init, using Azure Storage as state
+      # Setup variables that can be injected
+      # run terraform plan
+      # run terraform apply if not a PR
  
   # This workflow contains a single job called "build"
   deploy:
