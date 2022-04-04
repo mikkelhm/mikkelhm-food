@@ -22,6 +22,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
@@ -29,9 +30,17 @@ jobs:
         id: fmt
         run: terraform fmt -check
 
+      - name: Substitude backend vars with secrets
+        uses: microsoft/variable-substitution@v1 
+        with:
+          files: 'backend.tfvars'
+        env: 
+          storage_account_name: ${{ secrets.TERRAFORM_STATE_STORAGE_ACCOUNT_NAME }}
+          access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+
       - name: Terraform init
         id: init
-        run: terraform init
+        run: terraform init --backend-config=backend.tfvars
       
       # TODO
       # Setup terraform init, using Azure Storage as state
