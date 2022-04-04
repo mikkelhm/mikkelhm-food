@@ -33,7 +33,7 @@ jobs:
       - name: Substitude backend vars with secrets
         uses: microsoft/variable-substitution@v1 
         with:
-          files: 'backend.tfvars'
+          files: './devops/infrastructure/backend.tfvars'
         env: 
           storage_account_name: ${{ secrets.TERRAFORM_STATE_STORAGE_ACCOUNT_NAME }}
           access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
