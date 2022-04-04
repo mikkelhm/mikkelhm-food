@@ -1,6 +1,18 @@
 ## Azure
 variable "azure_subscription_id" {
-  description = "Subscription Id"
+  description = "Azure Subscription Id"
+}
+
+variable "azure_tenant_id" {
+  description = "Azure Tenant Id"
+}
+
+variable "azure_client_id" {
+  description = "Client Id for preforming the Terraform against Azure"
+}
+
+variable "azure_client_secret" {
+  description = "Client secret to go with the Client Id for preforming the Terraform against Azure"
 }
 
 ## Cloudflare
