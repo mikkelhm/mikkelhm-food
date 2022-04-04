@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: 'Continous Integration'
 
 # Controls when the workflow will run
 on:
@@ -15,8 +13,57 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./devops/infrastructure
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+
+      - name: Substitude backend vars with secrets
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: './devops/infrastructure/backend.tfvars'
+        env: 
+          tf_state_storage_account_name: ${{ secrets.TERRAFORM_STATE_STORAGE_ACCOUNT_NAME }}
+          tf_state_storage_account_access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+
+      - name: Terraform init
+        run: terraform init --backend-config=backend.tfvars
+
+      - name: Substitude variables file with secrets
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: './devops/infrastructure/variables.tfvars'
+        env: 
+          azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+          azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Terraform plan
+        run: terraform plan -var-file="variables.tfvars"
+
+      - name: Terraform plan
+        if: ${{ github.event_name != 'pull_request' }}
+        run: terraform apply -var-file="variables.tfvars"
+ 
   # This workflow contains a single job called "build"
-  build:
+  deploy:
+    if: ${{ github.event_name != 'pull_request' }}
+    name: 'Deploy to www.madsn.dk'
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
