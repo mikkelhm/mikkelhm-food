@@ -41,9 +41,21 @@ jobs:
       - name: Terraform init
         id: init
         run: terraform init --backend-config=backend.tfvars
-      
+
+      - name: Substitude variables file with secrets
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: './devops/infrastructure/variables.tfvars'
+        env: 
+          azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Terraform plan
+        id: init
+        run: terraform plan -var-file="variables.tfvars"
+
       # TODO
-      # Setup terraform init, using Azure Storage as state
       # Setup variables that can be injected
       # run terraform plan
       # run terraform apply if not a PR
