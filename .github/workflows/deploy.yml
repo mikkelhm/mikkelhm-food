@@ -25,6 +25,10 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
+
+      - name: Terraform init
+        id: init
+        run: terraform init
       
       # TODO
       # Setup terraform init, using Azure Storage as state
