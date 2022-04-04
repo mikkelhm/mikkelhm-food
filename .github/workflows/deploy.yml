@@ -39,7 +39,6 @@ jobs:
           tf_state_storage_account_access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
 
       - name: Terraform init
-        id: init
         run: terraform init --backend-config=backend.tfvars
 
       - name: Substitude variables file with secrets
@@ -55,13 +54,11 @@ jobs:
           cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Terraform plan
-        id: plan
         run: terraform plan -var-file="variables.tfvars"
 
-      # TODO
-      # Setup variables that can be injected
-      # run terraform plan
-      # run terraform apply if not a PR
+      - name: Terraform plan
+        if: ${{ github.event_name != 'pull_request' }}
+        run: terraform apply -var-file="variables.tfvars"
  
   # This workflow contains a single job called "build"
   deploy:
