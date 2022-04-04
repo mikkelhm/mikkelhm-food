@@ -52,7 +52,7 @@ jobs:
           cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
       - name: Terraform plan
-        id: init
+        id: plan
         run: terraform plan -var-file="variables.tfvars"
 
       # TODO
