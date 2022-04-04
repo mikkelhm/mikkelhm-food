@@ -31,12 +31,12 @@ jobs:
         run: terraform fmt -check
 
       - name: Substitude backend vars with secrets
-        uses: microsoft/variable-substitution@v1 
+         uses: cschleiden/replace-tokens@v1
         with:
           files: './devops/infrastructure/backend.tfvars'
         env: 
-          storage_account_name: ${{ secrets.TERRAFORM_STATE_STORAGE_ACCOUNT_NAME }}
-          access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
+          tf_state_storage_account_name: ${{ secrets.TERRAFORM_STATE_STORAGE_ACCOUNT_NAME }}
+          tf_state_storage_account_access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
 
       - name: Terraform init
         id: init
