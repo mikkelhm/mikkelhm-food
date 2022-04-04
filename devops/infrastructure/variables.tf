@@ -9,5 +9,5 @@ variable "cloudflare_zone_id" {
 }
 
 variable "cloudflare_api_token" {
-    description = "Cloudflare api token to access the zone"
+  description = "Cloudflare api token to access the zone"
 }
