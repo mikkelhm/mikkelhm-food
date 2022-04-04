@@ -31,7 +31,7 @@ jobs:
         run: terraform fmt -check
 
       - name: Substitude backend vars with secrets
-         uses: cschleiden/replace-tokens@v1
+        uses: cschleiden/replace-tokens@v1
         with:
           files: './devops/infrastructure/backend.tfvars'
         env: 
