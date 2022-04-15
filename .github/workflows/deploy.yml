@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./devops/infrastructure
+        working-directory: ./infrastructure
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
       - name: Substitude backend vars with secrets
         uses: cschleiden/replace-tokens@v1
         with:
-          files: './devops/infrastructure/backend.tfvars'
+          files: './infrastructure/backend.tfvars'
         env: 
           tf_state_storage_account_name: ${{ secrets.TERRAFORM_STATE_STORAGE_ACCOUNT_NAME }}
           tf_state_storage_account_access_key: ${{ secrets.TERRAFORM_STATE_ACCESS_KEY }}
@@ -49,7 +49,7 @@ jobs:
       - name: Substitude variables file with secrets
         uses: cschleiden/replace-tokens@v1
         with:
-          files: './devops/infrastructure/variables.tfvars'
+          files: './infrastructure/variables.tfvars'
         env: 
           azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
           azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
